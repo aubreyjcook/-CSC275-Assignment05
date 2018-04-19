@@ -3,14 +3,14 @@ import java.util.Comparator;
 public class Item {
 	String name = "none";
 	float weight = 0;
-	String value = "none";
+	float value = 0;
 	String durability = "none";
 	String ID = "none";
 			
 	Item(){}
 	
 	//constructor
-	public Item(String itemName, float itemWeight, String itemValue, String itemDurability, String itemID) {
+	public Item(String itemName, float itemWeight, float itemValue, String itemDurability, String itemID) {
 		Item item = new Item();
 		
 		item.name = itemName;
@@ -29,7 +29,7 @@ public class Item {
 		this.weight = newItemWeight;
 	}
 	
-	public void setItemValue(String newItemValue) {
+	public void setItemValue(float newItemValue) {
 		this.value = newItemValue;
 	}
 	
@@ -50,7 +50,7 @@ public class Item {
 		return weight;
 	}
 	
-	public String getItemValue() {
+	public float getItemValue() {
 		return value;
 	}
 	

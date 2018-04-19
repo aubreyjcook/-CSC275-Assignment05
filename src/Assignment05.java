@@ -1,7 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class Assignment05 {
@@ -96,7 +100,11 @@ public class Assignment05 {
 		tempItem.setItemWeight(Float.parseFloat(userInput));
 		System.out.println("Enter the Item's value");
 		userInput = input.next();
-		tempItem.setItemValue(userInput);
+		while(!isNumeric(userInput)) {
+			System.out.println("Invalid data, retry");
+			userInput = input.next();
+		}
+		tempItem.setItemValue(Float.parseFloat(userInput));
 		System.out.println("Enter the Item's durability");
 		userInput = input.next();
 		tempItem.setItemDurability(userInput);
@@ -129,10 +137,20 @@ public class Assignment05 {
 			return;		
 		}
 	}
-
+	
+	public static <T> void sort(List<T> list, Comparator<? super T> c) {
+		Object[] a = list.toArray();
+		Arrays.sort(a, (Comparator)c);
+		ListIterator i = list.listIterator();
+		for (int j=0; j<a.length; j++) {
+			i.next();
+			i.set(a[j]);
+		}
+	}
+	
 	private void sortItems(ArrayList<Item> cargohold) {
 		
-		Collections.sort(cargohold, Item.ItemNameComparator);
+		sort(cargohold, Item.ItemNameComparator);
 		
 		System.out.println("cargohold sorted.");
 		return;
@@ -164,10 +182,10 @@ public class Assignment05 {
 					return;
 				case 2:
 					System.out.println("Enter the value of the item.");
-					String userInput1 = input.nextLine();
+					float userInput1 = (Float.parseFloat(input.nextLine()));
 					
 					for(int i = 0; i < cargohold.size(); i++) {					
-						if(cargohold.get(i).value.equals(userInput1)) {
+						if(cargohold.get(i).value == userInput1) {
 							System.out.println("The item was found at section number " + (i + 1));
 							break;
 						} else if (i == cargohold.size() - 1) {
@@ -253,15 +271,14 @@ public class Assignment05 {
 	}
 	
 	public static void loadData(File file, ArrayList<Item> cargohold) throws FileNotFoundException {
-		Item tempItem = new Item();
-		
 		if(file.exists()) {
 			Scanner input = new Scanner(file);
 			while(input.hasNext()) {
+				Item tempItem = new Item();
 				tempItem.setItemID(input.nextLine());
 				tempItem.setItemName(input.nextLine());
 				tempItem.setItemWeight(Float.parseFloat(input.nextLine()));
-				tempItem.setItemValue(input.nextLine());
+				tempItem.setItemValue(Float.parseFloat(input.nextLine()));
 				tempItem.setItemDurability(input.nextLine());
 				cargohold.add(tempItem);
 			}
