@@ -35,6 +35,7 @@ public class Assignment05 {
 			System.out.println("4: Search for an item.");
 			System.out.println("5: Display the items in the cargo hold.");
 			System.out.println("6: Erase the cargo hold data manifest.");
+			System.out.println("9: Output optimal value for items currently held in the cargohold at maximum weight capacity.");
 			System.out.println("0: Exit the BlackStar Cargo Hold interface.");
 
 			// Get the user input
@@ -304,18 +305,20 @@ public class Assignment05 {
 	public static void ransackConstructor(File file, ArrayList<Item> cargohold) {
 		int[] val = new int[cargohold.size()];
 		int[] wt = new int[cargohold.size()];;
+		String[] names = new String[cargohold.size()];
 				
 		for (int i = 0; i < cargohold.size(); i++) {
-			val[i] = (int) cargohold.get(i).value;
-			wt[i]  = (int) cargohold.get(i).weight;
+			val[i]   = (int) cargohold.get(i).value;
+			wt[i]    = (int) cargohold.get(i).weight;
+			names[i] = cargohold.get(i).name;
 		}
 		
         int W = 25;
 
-        System.out.println(ransack(val, wt, W));
+        System.out.println(ransack(val, wt, W, names));
 	}
 	
-	public static int ransack(int val[], int wt[], int W) {
+	public static int ransack(int val[], int wt[], int W, String names[]) {
 		//gets the number of items
 		int N = wt.length;
 		
@@ -340,10 +343,11 @@ public class Assignment05 {
 					//compare current item + value of item with remaining value of current item
 					V[item][weight]=Math.max (val[item-1]+V[item-1][weight-wt[item-1]], V[item-1][weight]);
 				} else {
-					//skils item if it overrides weight
+					//skips item if it overrides weight requirements
 					V[item][weight]=V[item-1][weight];
 				}
 				
+				/*
 				for (int[] rows : V) {
 		            for (int col : rows) {
 
@@ -351,7 +355,7 @@ public class Assignment05 {
 		            }
 		            System.out.println();
 		        }
-
+				*/
 		        
 			}
 		}
