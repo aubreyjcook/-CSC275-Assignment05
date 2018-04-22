@@ -9,6 +9,6 @@ We don’t have time to figure this out now as Gweedar might come back at any mo
 •	Items have attributes such as Name, Weight, Value, Durability and ID. (Create an object called ‘Item’) <-
 •	We now classify our items by separating them into 3 distinct categories Equipable, Consumable or Weapon. (You must implement these 3 classes that are subclasses of Item and they must have at least 3 unique attributes in each subclass) <-
 •	We can carry an unlimited number of items, as long as they don’t exceed the maximum weight of the cargo bay, 25 Tons. (Use an ArrayList that checks an item’s weight before placing it in the cargo hold) <-
-•	The following methods still have the same requirements from the assignment previous to this one: Add, Remove, Search, Sort, Filter, and Display.
+•	The following methods still have the same requirements from the assignment previous to this one: Add, Remove, Search, Sort, Filter, and Display. <-
 
 Note: With your submission of this assignment you must include all of your files AND your file that you created to load into your program.

@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Assignment05 {
 	Scanner input = new Scanner(System.in);
@@ -69,6 +70,9 @@ public class Assignment05 {
 					break;
 				case 8:
 					loadData(file, cargohold);
+					break;
+				case 9:
+					ransackConstructor(file, cargohold);
 					break;
 				case 0:
 					System.out.println("Thank you for using the BlackStar Cargo Hold interface. See you again soon!");
@@ -296,4 +300,62 @@ public class Assignment05 {
             System.out.println("Failed to delete the file");
         }
 	}
+
+	public static void ransackConstructor(File file, ArrayList<Item> cargohold) {
+		int[] val = new int[cargohold.size()];
+		int[] wt = new int[cargohold.size()];;
+				
+		for (int i = 0; i < cargohold.size(); i++) {
+			val[i] = (int) cargohold.get(i).value;
+			wt[i]  = (int) cargohold.get(i).weight;
+		}
+		
+        int W = 25;
+
+        System.out.println(ransack(val, wt, W));
+	}
+	
+	public static int ransack(int val[], int wt[], int W) {
+		//gets the number of items
+		int N = wt.length;
+		
+		//builds a matrix of items
+		int[][] V = new int[N + 1][W + 1];
+		
+		//for capacity of zero
+		for (int col = 0; col <= W; col++) {
+            V[0][col] = 0;
+        }
+	
+		//for no items in home row
+		for (int row = 0; row <= N; row++) {
+            V[row][0] = 0;
+        }
+		
+		for (int item=1;item<=N;item++){
+			//fill values in each row
+			for (int weight=1;weight<=W;weight++){
+				//check if current items weight less than or equal to comparison weight
+				if (wt[item-1]<=weight){
+					//compare current item + value of item with remaining value of current item
+					V[item][weight]=Math.max (val[item-1]+V[item-1][weight-wt[item-1]], V[item-1][weight]);
+				} else {
+					//skils item if it overrides weight
+					V[item][weight]=V[item-1][weight];
+				}
+				
+				for (int[] rows : V) {
+		            for (int col : rows) {
+
+		                System.out.format("%5d", col);
+		            }
+		            System.out.println();
+		        }
+
+		        
+			}
+		}
+		return V[N][W];
+	}
+
 }
